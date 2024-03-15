@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 public class Project_Triston_Miller {
     public static void main(String[] args) {
         ArrayList<Policy> policies = new ArrayList<>();
+        int smokersCount = 0;
+        int nonSmokersCount = 0;
         
         try {
             File policyFile = new File("PolicyInformation.txt");
@@ -23,6 +25,13 @@ public class Project_Triston_Miller {
                 
                 Policy policy = new Policy(policyNumber, providerName, firstName, lastName, age, smokingStatus, height, weight);
                 policies.add(policy);
+                
+                // Update smokers and non-smokers counts
+                if ("smoker".equalsIgnoreCase(smokingStatus)) {
+                    smokersCount++;
+                } else {
+                    nonSmokersCount++;
+                }
                 
                 if (fileScanner.hasNextLine()) {
                     // Skip any empty lines between records
@@ -44,7 +53,11 @@ public class Project_Triston_Miller {
                 System.out.println("Policyholder's BMI: " + String.format("%.2f", policy.calculateBMI()));
                 System.out.println("Insurance Price: $" + String.format("%.2f", policy.calculateInsurancePrice()));
                 System.out.println(); // Adding a blank line for readability between policies
+                
             }
+             // Display the counts
+            System.out.println("Number of Smokers: " + smokersCount);
+            System.out.println("Number of Non-Smokers: " + nonSmokersCount);
             
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred while reading the policy information file.");
